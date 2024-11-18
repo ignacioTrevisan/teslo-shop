@@ -5,7 +5,10 @@ import { GeistMono, GeistSans } from "@/config/fonts";
 
 
 export const metadata: Metadata = {
-  title: "Teslo shop",
+  title: {
+    template: '&s -Teslo | Shop',
+    default: 'Home page'
+  },
   description: "Una tienda virtual",
 };
 

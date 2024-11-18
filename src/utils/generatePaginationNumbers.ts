@@ -2,7 +2,6 @@
 
 export const generatePaginationNumbers = (currentPage: number, totalPage: number) => {
     if (totalPage <= 7) {
-        console.log('(totalPage <= 7) {')
         return Array.from({ length: totalPage }, (_, i) => i + 1);
 
     }

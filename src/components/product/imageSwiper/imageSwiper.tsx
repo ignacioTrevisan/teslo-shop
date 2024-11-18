@@ -34,7 +34,7 @@ export const ImageSwiper = ({ images, title, className }: Props) => {
                 modules={[FreeMode, Navigation, Thumbs]}
                 className="mySwiper2 lg:min-h-[1200px]"
             >
-                {images.map((index, image) =>
+                {images.map((image, index) =>
 
                     <SwiperSlide key={index}>
                         <Image key={image} src={`/products/${image}`} alt={title}

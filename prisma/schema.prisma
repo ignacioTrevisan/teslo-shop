@@ -44,16 +44,15 @@ model Category {
 }
 
 model Producto {
-  id          String   @id @default(uuid())
-  title       String
-  description String?
-  inStock     Int
-  price       Float    @default(0)
-  sizes       Size[]   @default([])
-  slug        String   @unique
-  tags        String[] @default([])
-  gender      Gender
-
+  id           String         @id @default(uuid())
+  title        String
+  description  String?
+  inStock      Int
+  price        Float          @default(0)
+  sizes        Size[]         @default([])
+  slug         String         @unique
+  tags         ValidTypes
+  gender       Gender
   category     Category       @relation(fields: [categoryId], references: [id])
   categoryId   String
   ProductImage ProductImage[]

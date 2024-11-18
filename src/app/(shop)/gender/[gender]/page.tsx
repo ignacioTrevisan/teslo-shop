@@ -1,3 +1,5 @@
+
+
 export const revalidate = 60;
 
 import { getPaginatedProductsWithImages } from "@/actions";

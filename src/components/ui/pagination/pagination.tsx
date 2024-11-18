@@ -16,22 +16,22 @@ export const Pagination = ({ totalPages }: Props) => {
 
     const createPageUrl = (pageNumber: number | string) => {
         const params = new URLSearchParams(searchParams);
-        console.log('hola?')
+
         if (pageNumber === '...') {
 
             return `${pathname}?${params.toString()}`
         }
         if (+pageNumber <= 0) {
-            console.log('2')
+
 
             return `${pathname} `
         }
         if (+pageNumber > totalPages) {
-            console.log('3')
+
             return `${pathname}?${params.toString()}`;
 
         }
-        console.log('4', pageNumber)
+
 
         params.set('page', pageNumber.toString());
         return `${pathname}?${params.toString()}`

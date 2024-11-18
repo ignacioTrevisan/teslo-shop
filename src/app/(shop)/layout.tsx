@@ -4,8 +4,10 @@ import type { Metadata } from 'next'
 
 
 export const metadata: Metadata = {
-    title: 'TesloShop',
-    description: 'ShopLayout Description'
+    title: {
+        template: '%s -Teslo | Shop',
+        default: 'Home page'
+    },
 };
 
 export default function ShopLayout({ children }: {

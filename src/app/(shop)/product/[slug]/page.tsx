@@ -1,21 +1,44 @@
-import { SizeSelector, QuantitySelector } from '@/components/product/';
+export const revalidate = 600;
 import { titleFont } from '@/config/fonts';
-import { initialData } from '@/seed/seed';
 import { notFound } from 'next/navigation';
 import { ImageSwiper } from '@/components/product/imageSwiper/imageSwiper';
 import { ImageSwiperMobile } from '@/components/product/imageSwiper/imageSwiperMobile';
+import { GetProductBySlug } from '@/actions/products/get-product-by-slug';
+import { StockLabel } from '@/components/product/stockLabel/stockLabel';
+import { Metadata, ResolvingMetadata } from 'next';
+import { cache } from 'react';
+import { QuantitySizeSelector } from '../../../../components/product/quantity-Size-selector/quantity-Size-Selector';
+import { Product } from '@/interface';
 
 interface Props {
     params: Promise<{
         slug: string
     }>
-    // params: Promise<{ gender: string }>;  // Ahora params es una promesa
-
 }
-export default async function ProductPage({ params }: Props) {
-    const resolvedParams = await params;  // Esperar a que se resuelva la promesa
 
-    const product = initialData.products.find((p) => p.slug === resolvedParams.slug);
+const getProductBySlugCached = cache(GetProductBySlug);
+
+
+export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+    // read route params
+    const slug = (await params).slug
+    const product: Product = await GetProductBySlug(slug);
+
+    return {
+        title: product.title,
+        description: product.description,
+        openGraph: {
+            title: product.title,
+            description: product.description ?? '',
+            images: [`/products/${product.images[1]}`],
+        },
+    }
+}
+
+
+export default async function ProductPage({ params }: Props) {
+    const paramsResolved = await params;
+    const product = await GetProductBySlug(paramsResolved.slug);
     if (!product) {
         notFound()
     }
@@ -27,19 +50,13 @@ export default async function ProductPage({ params }: Props) {
                 <ImageSwiper images={product.images} title={product.title} className='hidden md:block' />
             </div>
             <div className="col-span-1 px-5 ">
+                <StockLabel slug={paramsResolved.slug} />
                 <h1 className={`${titleFont.className} antialiased font-bold text-xl`}>
                     {product.title}
                 </h1>
                 <p className='text-lg mb-5'>${product.price.toFixed(2)}</p>
 
-                {/* Selector de tallas */}
-                <SizeSelector Sizes={product.sizes} SelectedSize={product.sizes[0]} />
-                {/* Selector de cantidad */}
-                <QuantitySelector quantity={2} />
-
-                {/* Boton */}
-
-                <button className='btn-primary my-5'>Agregar al carrito</button>
+                <QuantitySizeSelector product={product} />
                 {/* descripcion */}
                 <h3 className='font-bold text-sm'>Descripcion</h3>
                 <p className='font-light'>{product.description}</p>
