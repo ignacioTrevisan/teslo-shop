@@ -37,9 +37,14 @@ enum ValidTypes {
   hats
 }
 
+enum Role {
+  admin
+  user
+}
+
 model Category {
   id      String     @id @default(uuid())
-  name    ValidTypes @unique
+  name    String     @unique
   Product Producto[]
 }
 
@@ -51,7 +56,7 @@ model Producto {
   price        Float          @default(0)
   sizes        Size[]         @default([])
   slug         String         @unique
-  tags         ValidTypes
+  tags         String[]
   gender       Gender
   category     Category       @relation(fields: [categoryId], references: [id])
   categoryId   String
@@ -65,4 +70,14 @@ model ProductImage {
   Url       String
   product   Producto @relation(fields: [ProductId], references: [id])
   ProductId String
+}
+
+model User {
+  id          String    @id @default(uuid())
+  name        String
+  email       String    @unique
+  emailVerify DateTime?
+  password    String
+  role        Role      @default(user)
+  image       String?
 }

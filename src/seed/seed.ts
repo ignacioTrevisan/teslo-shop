@@ -1,3 +1,4 @@
+import bcryptsjs from 'bcryptjs'
 import { Size } from "@prisma/client";
 
 interface SeedProduct {
@@ -13,15 +14,42 @@ interface SeedProduct {
     gender: ValidCategories;
 }
 
+interface SeedUser {
+    name: string,
+    email: string,
+    password: string,
+    role: 'admin' | 'user',
+}
+
 export type ValidCategories = 'men' | 'women' | 'kid' | 'unisex';
 export type ValidTypes = 'shirts' | 'pants' | 'hoodies' | 'hats';
 
 interface SeedData {
     categories: ValidTypes[]
     products: SeedProduct[],
+    users: SeedUser[]
 }
 export const initialData: SeedData = {
-
+    users: [
+        {
+            email: 'nacho@gmail.com',
+            name: 'Nacho',
+            password: bcryptsjs.hashSync('123456', 10),
+            role: 'admin'
+        },
+        {
+            email: 'gabriel@gmail.com',
+            name: 'gabriel',
+            password: bcryptsjs.hashSync('123456', 10),
+            role: 'user'
+        },
+        {
+            email: 'martin@gmail.com',
+            name: 'martin',
+            password: bcryptsjs.hashSync('123456', 10),
+            role: 'user'
+        }
+    ],
     categories: [
         'shirts', 'pants', 'hoodies', 'hats'
     ],

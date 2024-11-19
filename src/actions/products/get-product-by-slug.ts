@@ -14,6 +14,11 @@ export const GetProductBySlug = async (slug: string): Promise<Product> => {
                     select: {
                         Url: true
                     }
+                },
+                category: {
+                    select: {
+                        name: true // Esto nos da el "type" desde Category
+                    }
                 }
             }
         }
@@ -24,7 +29,7 @@ export const GetProductBySlug = async (slug: string): Promise<Product> => {
             const { ...rest } = producto;
             return {
                 ...rest,
-                type: producto.tags
+                type: producto.category.name,
                 images: producto.ProductImage.map(image => image.Url)
             }
         }
