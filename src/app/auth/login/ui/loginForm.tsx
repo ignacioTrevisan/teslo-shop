@@ -8,8 +8,18 @@ import { useFormState } from 'react-dom';
 export const LoginForm = () => {
     const [state, dispatch] = useFormState(authenticate, undefined)
     // console.log(state)
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        console.log(Object.fromEntries(formData)); // Verifica los datos
+        dispatch(formData);
+    };
+
+
+
     return (
-        <form className="flex flex-col" action={dispatch}>
+        <form className="flex flex-col" onSubmit={handleSubmit}>
 
             <label htmlFor="email">Correo electrónico</label>
             <input
