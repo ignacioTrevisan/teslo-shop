@@ -1,18 +1,23 @@
 "use client";
 import { authenticate } from '@/actions/auth/login';
 import Link from 'next/link'
-import { useFormState } from 'react-dom';
-// import { useFormState } from 'react-dom';
+import { useEffect, useState } from 'react';
+import { useFormState, useFormStatus } from 'react-dom';
+import { BsArrowRight, BsExclamationCircle } from 'react-icons/bs';
 
 
 export const LoginForm = () => {
     const [state, dispatch] = useFormState(authenticate, undefined)
-    // console.log(state)
+    const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        console.log('state', state)
+
+    }, [state])
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
-        console.log(Object.fromEntries(formData)); // Verifica los datos
         dispatch(formData);
     };
 
@@ -37,12 +42,21 @@ export const LoginForm = () => {
                 name='password'
             />
 
+            <div
+                className='flex h-8 space-x-1 items-center justify-center pb-3'
+                aria-live='polite'
+                aria-atomic="true"
+            >
+                {state === 'authentication error' && (
+                    <>
+                        <BsExclamationCircle className='h-5 w-5 text-red-500' />
+                        <p className='text-sm text-red-500'>Invalid credentials</p>
+                    </>
+                )
 
-            <button
-                type='submit'
-                className="btn-primary">
-                Ingresar
-            </button>
+                }
+            </div>
+            <LoginButton />
 
 
             {/* divisor l ine */}
@@ -59,5 +73,20 @@ export const LoginForm = () => {
             </Link>
 
         </form>
+    )
+}
+
+
+function LoginButton() {
+    const { pending } = useFormStatus()
+    useEffect(() => {
+        console.log('asd', pending)
+    }, [pending])
+
+
+    return (
+        <button className={`${!pending ? 'btn-primary' : 'btn-disabled'}`} disabled={pending} type='submit'>
+            Log in <BsArrowRight className='ml-auto h-5 w-5 text-gray-50' />
+        </button>
     )
 }

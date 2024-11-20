@@ -6,9 +6,11 @@ import { z } from "zod";
 import prisma from "./lib/prisma";
 import bcryptsjs from 'bcryptjs';
 export const authConfig: NextAuthConfig = {
+
     pages: {
         signIn: '/auth/login',
         newUser: '/auth/new-account'
+
     },
     providers: [
         Credentials({
