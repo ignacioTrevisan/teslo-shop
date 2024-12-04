@@ -12,32 +12,38 @@ export const authConfig: NextAuthConfig = {
         newUser: '/auth/new-account'
 
     },
+    callbacks: {
+        jwt({ token, user }) {
+            console.log(user)
+            if (user) {
+                token.data = user;
+            }
+            return token;
+        },
+        session({ session, token }) {
+            session.user = token.data as any;
+            return session;
+        }
+    },
     providers: [
         Credentials({
             async authorize(credentials) {
+
                 const parsedCredentials = z
                     .object({ email: z.string().email(), password: z.string().min(6) })
                     .safeParse(credentials);
-                console.log('No llega nunca acá')
                 if (!parsedCredentials.success) return null;
                 const { email, password } = parsedCredentials.data;
-                console.log('hay cambiosssS????')
-                console.log({ email, password })
 
                 const user = await prisma.user.findUnique({ where: { email: email.toLowerCase() } });
-                if (!user) {
-                    console.log('1')
-                    return null;
-                } else {
-                    console.log('2')
-                }
+                if (!user) return null;
                 if (!bcryptsjs.compareSync(password, user.password)) return null;
                 const { password: contraseña, ...rest } = user;
-                console.log('rest', rest)
+
                 return rest;
             },
         }),
     ]
 }
 
-export const { signIn, signOut } = NextAuth(authConfig)
+export const { signIn, signOut, auth, handlers } = NextAuth(authConfig)

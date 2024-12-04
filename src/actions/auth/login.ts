@@ -1,6 +1,5 @@
 'use server';
 import { signIn } from '@/auth.config';
-import { Sleep } from '@/utils/sleep';
 
 export async function authenticate(
     prevState: string | undefined,
@@ -8,8 +7,9 @@ export async function authenticate(
 ) {
     try {
         // Descomentar si deseas añadir una pausa antes de la autenticación
-        await Sleep(2);
-
+        // await Sleep(2);
+        console.log('estamos acá ya')
+        console.log(formData)
         await signIn('credentials', {
             ...Object.fromEntries(formData), // Aquí pasamos los datos del formulario
             redirect: false, // Evitar redirección automática

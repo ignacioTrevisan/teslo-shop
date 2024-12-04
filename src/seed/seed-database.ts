@@ -1,17 +1,33 @@
 import { initialData } from "./seed";
+import { countries } from './seed.countries';
 import prisma from '../lib/prisma';
 
 async function main() {
 
-    await Promise.all([
-        prisma.user.deleteMany(),
-        prisma.productImage.deleteMany(),
-        prisma.category.deleteMany(),
-        prisma.producto.deleteMany(),
-    ])
+    await prisma.orderAddress.deleteMany();
+    await prisma.orderItems.deleteMany();
+    await prisma.order.deleteMany();
+
+    await prisma.userAddress.deleteMany();
+    await prisma.user.deleteMany();
+    await prisma.productImage.deleteMany();
+
+
+    await prisma.producto.deleteMany();
+    await prisma.category.deleteMany();
+    await prisma.country.deleteMany();
 
 
     const { categories, products, users } = initialData
+
+    countries.map(async (c) => {
+        await prisma.country.create({
+            data: {
+                id: c.id,
+                name: c.name
+            }
+        })
+    })
 
 
     const userData = users.map((u) => { return u });
@@ -48,6 +64,11 @@ async function main() {
             })
         })
     })
+
+
+
+
+
 
 
 

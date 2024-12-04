@@ -1,8 +1,8 @@
 "use server";
 
-import { Product } from "@/interface";
+import { Product, ValidTypes } from "@/interface";
 import prisma from "@/lib/prisma";
-import { ValidTypes } from "@prisma/client";
+
 
 
 export const GetProductBySlug = async (slug: string): Promise<Product> => {
@@ -27,9 +27,10 @@ export const GetProductBySlug = async (slug: string): Promise<Product> => {
             throw new Error('No se pudo encontrar este producto');
         } else {
             const { ...rest } = producto;
+
             return {
                 ...rest,
-                type: producto.category.name,
+                type: producto.category.name as ValidTypes,
                 images: producto.ProductImage.map(image => image.Url)
             }
         }

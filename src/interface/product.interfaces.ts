@@ -22,5 +22,14 @@ export interface ProductInCart {
     prize: number;
 }
 
+export interface ProductInOrder {
+    id: string,
+    title: string,
+    image: string,
+    size: ValidSizes,
+    quantity: number,
+    prize: number
+}
+
 export type ValidSizes = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL';
 export type ValidTypes = 'shirts' | 'pants' | 'hoodies' | 'hats';

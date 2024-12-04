@@ -28,9 +28,9 @@ export default async function ShopPage({ searchParams }: Props) {
 
   const { products, totalPage } = await getProducts();
 
-  if (products.length === 0) {
-    redirect('/')
-  }
+  // if (products.length === 0) {
+  //   redirect('/')
+  // }
   return (
     <>
       <Title

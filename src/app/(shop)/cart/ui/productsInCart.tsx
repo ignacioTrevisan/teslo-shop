@@ -13,7 +13,7 @@ export const ProductsInCart = () => {
         if (cart.length === 0) {
             redirect('/empty')
         }
-    }, [cart])
+    }, [])
 
     return (
         <>
@@ -32,7 +32,7 @@ export const ProductsInCart = () => {
                         <Link
                             href={`/product/${p.slug}`}
                         >
-                            <p className="hover::underline cursor-pointer">{p.title}</p>
+                            <p className="hover::underline cursor-pointer">{p.title} - {p.size}</p>
                         </Link>
                         <p>{p.prize}</p>
                         <QuantitySelector quantity={p.quantity}

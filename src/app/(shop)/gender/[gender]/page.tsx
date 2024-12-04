@@ -6,7 +6,7 @@ import { getPaginatedProductsWithImages } from "@/actions";
 import { Pagination, Title } from "@/components";
 import { ProductGrid } from "@/components/products/productsGrid/productGrid";
 import { Gender } from "@prisma/client";
-import { Metadata } from "next";
+import { Metadata, ResolvingMetadata } from "next";
 import { notFound, redirect } from "next/navigation";
 
 interface Props {
@@ -16,10 +16,20 @@ interface Props {
 }
 
 
-export const metadata: Metadata = {
-    title: 'Title',
-    description: 'Description'
-};
+
+
+export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+    // read route params
+    const paramsResolved = (await params).gender
+
+
+    return {
+        title: paramsResolved,
+        description: `ropa para el genero ${paramsResolved}`,
+
+    }
+}
+
 
 
 export default async function ShopWithSearchParams({ params, searchParams }: Props) {

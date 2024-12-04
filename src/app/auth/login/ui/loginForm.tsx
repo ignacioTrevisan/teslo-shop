@@ -1,30 +1,25 @@
 "use client";
 import { authenticate } from '@/actions/auth/login';
 import Link from 'next/link'
-import { useEffect, useState } from 'react';
+
+import { useEffect } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import { BsArrowRight, BsExclamationCircle } from 'react-icons/bs';
 
 
 export const LoginForm = () => {
     const [state, dispatch] = useFormState(authenticate, undefined)
-    const [loading, setLoading] = useState(false)
-
     useEffect(() => {
-        console.log('state', state)
-
+        if (state === 'authenticated') {
+            window.location.replace('/')
+        }
     }, [state])
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-        dispatch(formData);
-    };
-
-
-
     return (
-        <form className="flex flex-col" onSubmit={handleSubmit}>
+        <form className="flex flex-col"
+            action={dispatch}
+        // onSubmit={handleSubmit}
+        >
 
             <label htmlFor="email">Correo electrónico</label>
             <input
@@ -79,10 +74,6 @@ export const LoginForm = () => {
 
 function LoginButton() {
     const { pending } = useFormStatus()
-    useEffect(() => {
-        console.log('asd', pending)
-    }, [pending])
-
 
     return (
         <button className={`${!pending ? 'btn-primary' : 'btn-disabled'}`} disabled={pending} type='submit'>

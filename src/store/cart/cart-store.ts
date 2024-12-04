@@ -14,6 +14,7 @@ interface State {
         total: number;
         articlesQuantity: number;
     };
+    clearClart: () => void;
 }
 
 export const useCartStore = create<State>()(
@@ -78,6 +79,9 @@ export const useCartStore = create<State>()(
                 const product = cart.find((p) => p.size === size && p.slug === slug);
                 const updateCart = cart.filter((p) => p !== product);
                 set({ cart: updateCart })
+            },
+            clearClart: () => {
+                set({ cart: [] })
             }
         })
         ,
