@@ -1,3 +1,4 @@
+"use client"
 import { PayPalScriptProvider } from '@paypal/react-paypal-js'
 import { SessionProvider } from 'next-auth/react'
 import React from 'react'
@@ -9,7 +10,11 @@ export const Providers = ({ children }: Props) => {
 
 
   return (
-    <PayPalScriptProvider options={{ clientId: "test" }}>
+    <PayPalScriptProvider options={{
+      clientId: process.env.NEXT_PUBLIC_PAYPAL_PUBLIC_ID ?? '',
+      intent: 'capture',
+      currency: 'USD'
+    }}>
 
       <SessionProvider>{children}</SessionProvider>
     </PayPalScriptProvider>

@@ -13,7 +13,7 @@ export const GetOrderData = async (id: string) => {
                 id
             },
         })
-        console.log({ orderData })
+
         if (orderData?.userId !== user?.user.id && user?.user.role !== 'admin') {
 
             return {
@@ -31,7 +31,7 @@ export const GetOrderData = async (id: string) => {
 
         const productImage = await Promise.all(
             OrderItems.map(async (o) => {
-                console.log({ o });
+
                 return prisma.productImage.findFirst({ where: { ProductId: o.productId } })
             })
         );

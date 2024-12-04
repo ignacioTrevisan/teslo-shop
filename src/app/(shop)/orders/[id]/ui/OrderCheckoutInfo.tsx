@@ -1,5 +1,6 @@
 "use client"
 
+import { PayPalButton } from "@/components/PayPal/paypalButton";
 import { UserAddress } from "@/interface/UserAddress";
 import { CurrencyFormatter } from "@/utils/currencyFormatter";
 import clsx from "clsx";
@@ -54,24 +55,7 @@ export const OrderCheckoutInfo = ({ userAddress, ProductQuantity, Subtotal, Tax,
                 </span>
             </p>
             <div className='mt-5 mb-2 w-full'>
-                <div className={
-                    clsx(
-                        "flex items-center rounded-lg py-2 px-3.5 text-xs font-bold text-green mb-5",
-                        {
-                            'bg-red-500': !isPayed,
-                            'bg-green-700': isPayed
-                        }
-                    )
-                } >
-
-                    <IoCardOutline />
-                    {isPayed ?
-                        <span className="mx-2">Pagada</span>
-                        :
-
-                        <span className="mx-2">No pagada</span>
-                    }
-                </div>
+                <PayPalButton />
             </div>
 
         </div>
