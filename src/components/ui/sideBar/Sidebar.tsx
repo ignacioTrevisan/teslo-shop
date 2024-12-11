@@ -133,22 +133,31 @@ export const Sidebar = () => {
 
                         <div className='w-full h-px bg-gray-200 my-10' />
                         <Link
-                            href='/'
+                            href='/admin/products?page=1'
                             className='flex items-center mt-1 p-2 hover:bg-gray-100 rounded transition-all'
+                            onClick={(e) => {
+                                closeSideBar();
+                            }}
                         >
                             <IoShirtOutline size={30} />
                             <span className='ml-3 text-xl0' >Productos</span>
                         </Link>
                         <Link
-                            href='/'
+                            href='/admin/orders'
                             className='flex items-center mt-1 p-2 hover:bg-gray-100 rounded transition-all'
+                            onClick={(e) => {
+                                closeSideBar();
+                            }}
                         >
                             <IoTicketOutline size={30} />
                             <span className='ml-3 text-xl0' >Ordenes</span>
                         </Link>
                         <Link
-                            href='/'
+                            href='/admin/users'
                             className='flex items-center mt-1 p-2 hover:bg-gray-100 rounded transition-all'
+                            onClick={(e) => {
+                                closeSideBar();
+                            }}
                         >
                             <IoPeopleOutline size={30} />
                             <span className='ml-3 text-xl0' >Usuarios</span>

@@ -34,7 +34,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "next.config.mjs",
-    "src/app/api/create-paypal-order.js"
+    "src/app/api/create-paypal-order.ts",
+    "src/app/api/paypal/captureOrder/route.js"
   ],
   "exclude": [
     "node_modules"

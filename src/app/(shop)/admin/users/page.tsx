@@ -1,17 +1,21 @@
 // https://tailwindcomponents.com/component/hoverable-table
-import { GetOrderByUser } from '@/actions/order/get-order-by-user';
+import { AlterRole } from '@/actions/user/alterRole';
+import { GetPaginatedUsers } from '@/actions/user/getPaginatedUser';
 import { Title } from '@/components';
-import { OrderTable } from './ui/orderTable';
+import { revalidatePath } from 'next/cache';
 
-export default async function OrdersPage() {
-    const orders = await GetOrderByUser();
+import { redirect } from 'next/navigation';
+import { Table } from './ui/table';
 
-    if (!orders.orders) {
-        return (<p>Cargando ordenes...</p>)
+export default async function UsersPage() {
+    const { Users, ok } = await GetPaginatedUsers();
+    if (!ok || !Users) {
+        redirect('/auth/login');
     }
+
     return (
         <>
-            <Title title="Orders" />
+            <Title title="Todas las ordenes" />
 
             <div className="mb-10">
                 <table className="min-w-full">
@@ -25,16 +29,18 @@ export default async function OrdersPage() {
                                 Nombre completo
                             </th>
                             <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                Estado
+                                Email
                             </th>
                             <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                Opciones
+                                Rol
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        {orders.orders.map((o) =>
-                            <OrderTable order={o} />
+                        {Users.map((o) =>
+
+
+                            <Table user={o} />
                         )
                         }
 

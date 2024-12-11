@@ -1,11 +1,10 @@
 
 
 
-import { getPaginatedProductsWithImages } from "@/actions";
+import { getPaginatedProductsWithImages } from "@/actions/products/product-pagination";
 import { Pagination, Title } from "@/components";
 import { ProductGrid } from "@/components/products/productsGrid/productGrid";
 import { unstable_cache } from "next/cache";
-import { redirect } from "next/navigation";
 
 
 interface Props {

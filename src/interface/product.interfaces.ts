@@ -9,6 +9,7 @@ export interface Product {
     tags: string[];
     title: string;
     type: ValidTypes;
+    categoryId: string
     gender: 'men' | 'women' | 'kid' | 'unisex'
 }
 

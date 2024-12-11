@@ -11,6 +11,7 @@ import 'swiper/css/thumbs';
 import './imageSwiper.css'
 
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
+import { ProductImage } from '../product-image/product-image'
 
 interface Props {
     images: string[],
@@ -37,11 +38,10 @@ export const ImageSwiper = ({ images, title, className }: Props) => {
                 {images.map((image, index) =>
 
                     <SwiperSlide key={index}>
-                        <Image key={image} src={`/products/${image}`} alt={title}
-                            objectFit="contain"
+                        <ProductImage key={image} src={`${image}`} alt={title}
                             width={1028}
                             height={800}
-                            className='rounded-lg lg:max-w-[1228px] '
+                            className='rounded-lg lg:max-w-[1228px] object-contain '
                         />
 
                     </SwiperSlide>
@@ -60,11 +60,12 @@ export const ImageSwiper = ({ images, title, className }: Props) => {
                 {images.map((image, index) =>
 
                     <SwiperSlide key={index}>
-                        <Image key={index} src={`/products/${image}`} alt={title} width={300} height={300}
+                        <ProductImage key={index} src={image} alt={title} width={300} height={300}
                             className='rounded-lg object-fill'
                         />
                     </SwiperSlide>
-                )}
+                )
+                }
             </Swiper>
 
         </div>

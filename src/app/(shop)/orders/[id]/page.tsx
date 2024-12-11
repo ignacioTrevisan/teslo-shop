@@ -86,12 +86,14 @@ export default async function OrdersWithIdPage({ params }: Props) {
                         {/* Checkout */}
 
                         <OrderCheckoutInfo
+                            orderId={id}
                             userAddress={addressMapped}
                             Total={orderData!.total}
                             Subtotal={orderData!.subtotal}
                             Tax={orderData!.tax}
                             ProductQuantity={itemsInOrder}
                             isPayed={orderData!.isPaid}
+
                         />
 
                     </div>

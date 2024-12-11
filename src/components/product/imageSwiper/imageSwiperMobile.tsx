@@ -10,6 +10,7 @@ import 'swiper/css/thumbs';
 import './imageSwiper.css'
 
 import { FreeMode, Pagination } from 'swiper/modules';
+import { ProductImage } from '../product-image/product-image';
 
 interface Props {
     images: string[],
@@ -31,8 +32,8 @@ export const ImageSwiperMobile = ({ images, title, className }: Props) => {
                 {images.map((image) =>
 
                     <SwiperSlide key={image}>
-                        <Image
-                            key={image} src={`/products/${image}`} alt={title} width={600} height={500}
+                        <ProductImage
+                            key={image} src={`${image}`} alt={title} width={600} height={500}
                             className=''
                         />
                     </SwiperSlide>

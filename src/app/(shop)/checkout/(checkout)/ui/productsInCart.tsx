@@ -1,10 +1,10 @@
 "use client"
 
 import { useCartStore } from "@/store/cart/cart-store"
-import Image from "next/image"
-import { redirect } from "next/navigation"
+
 import { useEffect, useState } from "react"
 import { CurrencyFormatter } from '../../../../../utils/currencyFormatter';
+import { ProductImage } from "@/components/product/product-image/product-image"
 
 export const ProductsInCart = () => {
     const { cart } = useCartStore();
@@ -13,15 +13,15 @@ export const ProductsInCart = () => {
         setLoaded(true)
     }, [])
 
-    if (cart.length === 0 && loaded === true) {
-        redirect('/empty')
-    }
+    // if (cart.length === 0 && loaded === true) {
+    //     redirect('/empty')
+    // }
     return (
         <>
             {cart.map((p) =>
                 <div key={`${p.slug} - ${p.size}`} className='flex mb-5'>
-                    <Image
-                        src={`/products/${p.image}`}
+                    <ProductImage
+                        src={p.image}
                         width={100}
                         height={100}
                         alt={p.slug}

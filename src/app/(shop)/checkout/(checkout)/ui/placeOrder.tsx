@@ -49,7 +49,7 @@ export const PlaceOrder = () => {
             setErrorMessage(resp.msg);
             return;
         }
-
+        clearClart();
         router.replace('/orders/' + resp.order!.id)
     }
 

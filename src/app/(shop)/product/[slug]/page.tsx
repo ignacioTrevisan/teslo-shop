@@ -22,8 +22,11 @@ const getProductBySlugCached = cache(GetProductBySlug);
 export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
     // read route params
     const slug = (await params).slug
-    const product: Product = await getProductBySlugCached(slug);
-
+    const resp = await getProductBySlugCached(slug);
+    const { ok, product } = resp;
+    if (!product) {
+        throw Error('No se pudo obtener el producto solicitado.')
+    }
     return {
         title: product.title,
         description: product.description,
@@ -38,7 +41,8 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
 
 export default async function ProductPage({ params }: Props) {
     const paramsResolved = await params;
-    const product = await getProductBySlugCached(paramsResolved.slug);
+    const resp = await getProductBySlugCached(paramsResolved.slug);
+    const { ok, product } = resp;
     if (!product) {
         notFound()
     }

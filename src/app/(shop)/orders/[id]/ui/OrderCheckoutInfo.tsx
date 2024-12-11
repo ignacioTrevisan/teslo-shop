@@ -6,6 +6,7 @@ import { CurrencyFormatter } from "@/utils/currencyFormatter";
 import clsx from "clsx";
 import { IoCardOutline } from "react-icons/io5";
 interface Props {
+    orderId: string,
     userAddress: UserAddress
     ProductQuantity: number,
     Subtotal: number,
@@ -13,7 +14,7 @@ interface Props {
     Total: number,
     isPayed: boolean
 }
-export const OrderCheckoutInfo = ({ userAddress, ProductQuantity, Subtotal, Tax, Total, isPayed }: Props) => {
+export const OrderCheckoutInfo = ({ userAddress, ProductQuantity, Subtotal, Tax, Total, isPayed, orderId }: Props) => {
 
     return (
         <div className='bg-white rounded-xl shadow-xl p-7'>
@@ -54,9 +55,24 @@ export const OrderCheckoutInfo = ({ userAddress, ProductQuantity, Subtotal, Tax,
                     Al hacer clic en "Colocar orden", aceptas nuestros <a href='#' className='underline'>terminos y condiciones </a>
                 </span>
             </p>
-            <div className='mt-5 mb-2 w-full'>
-                <PayPalButton />
-            </div>
+            {!isPayed ?
+                <div className='mt-5 mb-2 w-full'>
+                    <PayPalButton orderId={orderId} totalToPay={Total.toString()} />
+                </div>
+                :
+                <div className={
+                    clsx(
+                        "flex items-center h-10 rounded-lg py-2 px-3.5 text-xs font-bold text-green mb-5 bg-green-700",
+
+                    )
+                } >
+
+                    <IoCardOutline />
+
+                    <span className="mx-2 text-1xl">Pagada</span>
+
+                </div>
+            }
 
         </div>
     )
